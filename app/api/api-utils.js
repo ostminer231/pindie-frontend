@@ -53,17 +53,21 @@ export const authorize = async (url, data) => {
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ users: usersArray }) ,
-    })
+      body: JSON.stringify(data),
+      credentials: 'include' // Включение отправки cookies
+    });
+    
     if (response.status !== 200) {
-      throw new Error('Ошибка авторизации')
+      throw new Error('Ошибка авторизации');
     }
-    const result = await response.json()
-    return result
+
+    const result = await response.json();
+    return result;
   } catch (error) {
-    return error
+    return error;
   }
-}
+};
+
 
 export const setJWT = (jwt) => {
   document.cookie = `jwt=${jwt}`
